@@ -1,5 +1,5 @@
 {
-    "name": "helsingborg-stad/subpath-to-subdomain-redirect",
+    "name": "helsingborg-stad/subdirectory-to-subdomain-redirect",
     "type": "wordpress-muplugin", 
     "license": "MIT",
     "authors": [
