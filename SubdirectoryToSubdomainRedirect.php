@@ -3,7 +3,7 @@
 /*
 Plugin Name:    Subdirectory to subdomain redirect
 Description:    Redirects any sudirectory call that matches an existing subdomain in a network install.
-Version:        1.0.0
+Version:        0.0.2
 Author:         Sebastian Thulin, Joel Bernerman
 */
 
@@ -30,7 +30,7 @@ class SubdirectoryToSubdomainRedirect
     public function init()
     {
         // Only redirect from active blogs;
-        if (!in_array(get_current_blog_id(), $this->$activeRedirectBlogs)) {
+        if (!in_array(get_current_blog_id(), $this->activeRedirectBlogs)) {
             return;
         }
 
@@ -89,7 +89,7 @@ class SubdirectoryToSubdomainRedirect
 
         // Remove active redirect sites from result.
         $response = array_filter($response, function ($site) {
-            return !in_array($site->blog_id, $this->$activeRedirectBlogs);
+            return !in_array($site->blog_id, $this->activeRedirectBlogs);
         });
         return $response;
     }
