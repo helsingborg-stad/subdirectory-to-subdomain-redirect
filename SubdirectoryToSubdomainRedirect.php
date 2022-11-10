@@ -3,7 +3,7 @@
 /*
 Plugin Name:    Subdirectory to subdomain redirect
 Description:    Redirects any sudirectory call that matches an existing subdomain in a network install.
-Version:        0.0.2
+Version:        1.0.0
 Author:         Sebastian Thulin, Joel Bernerman
 */
 
@@ -19,10 +19,10 @@ class SubdirectoryToSubdomainRedirect
             $this->activeRedirectBlogs = SUBDIRECTORY_TO_SUBDOMAIN_REDIRECT_ACTIVE_BLOGS;
         }
 
-        add_action('init', array($this, 'init'));
+        add_action('wp_loaded', array($this, 'init'));
     }
 
-    
+
     /**
      * Initializes the redirect process by getting the sites and stuff.
      * @return void
@@ -51,6 +51,7 @@ class SubdirectoryToSubdomainRedirect
         $currentPath = trim($this->currentPath(), '/');
 
         foreach ($sites as $site) {
+
             $subdomain = explode('.', $site->domain);
             $subdomain = reset($subdomain);
 
@@ -58,10 +59,9 @@ class SubdirectoryToSubdomainRedirect
                 continue;
             }
 
-            wp_redirect($site->url. "/" . str_ireplace($subdomain . "/", "", $currentPath . "/"), '302');
+            wp_redirect('https://' . $site->domain, '302');
             exit;
         }
-
         return false;
     }
 
@@ -80,8 +80,7 @@ class SubdirectoryToSubdomainRedirect
      */
     public function getSites() : array
     {
-
-        $response = get_sites(array('network_id' => null));
+        $response = get_sites(array('number' => 0));
 
         if (!$response) {
             return array();
